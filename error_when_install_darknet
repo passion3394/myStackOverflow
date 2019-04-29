@@ -1,0 +1,25 @@
+git clone https://github.com/AlexeyAB/darknet.git
+
+modify Makefile
+
+make
+
+error occurs:
+
+/root/anaconda3/lib/libicui18n.so.58: undefined reference to `__cxa_throw_bad_array_new_length@CXXABI_1.3.8'
+/root/anaconda3/lib/libicui18n.so.58: undefined reference to `operator delete(void*, unsigned long)@CXXABI_1.3.9'
+
+it's a conflict between /root/anaconda3/lib/libicui18n.so.58 and the system lib /usr/lib64/libicui18n.so.50
+
+try to make the Makefile using the system lib /usr/lib64/libicui18n.so.50
+
+do the following:
+(1) modify the Makefile
+line 94:  LDFLAGS+= -L/usr/local/cuda/lib64 -lcuda -lcudart -lcublas -lcurand
+to
+LDFLAGS+= -L/usr/local/cuda/lib64 -L/usr/lib64 -lcuda -lcudart -lcublas -lcurand
+
+export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda-10.0/lib64:/usr/lib64/boost/lib/:
+
+make
+done!
