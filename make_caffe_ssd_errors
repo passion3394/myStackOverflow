@@ -1,0 +1,18 @@
+1 undefined boost::re_detail等错误，这个是完全由于boost版本混乱造成的，系统中存在boost1.53和boost1.61，错误的原因
+在于include用的是/usr/include中的boost头文件，而lib用的是/usr/lib64/boost/lib中的boost1.61库
+修改方法为：
+（1）将/usr/include/boost改名，同时将/usr/lib64/boost/include加入Makefile.config 
+（2）将/usr/lib64中的所有boost*.so转移到一个新的文件夹做备份，同时将/usr/lib64/boost/lib加入Makefile，强制编译器使用boost1.61
+
+2 使用了boost1.61后，报错：
+error: token ""__CUDACC_VER__ is no longer supported
+原因在于boost1.61对cuda9.0以上的库支持不太好，最简单的修改方法是将/usr/local/cuda/include/crt/common_functions.h的74行注释掉，
+等caffe-ssd编译好之后再解注释
+
+3 make runtest报错：
+*** Aborted at 1557976255 (unix time) try "date -d @1557976255" if you are using GNU date ***
+PC: @     0x7ff008333322 __memmove_ssse3_back
+*** Error in `.build_release/test/test_all.testbin': malloc(): memory corruption (fast): 0x0000000011237cb0 ***
+
+网上的说法是多个GPU之间的clock不一致造成的问题，最简单的办法是编译之前先运行export CUDA_VISIBLE_DEVICES=0
+指定一个GPU来做make runtest
