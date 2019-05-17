@@ -1,0 +1,2 @@
+参考chuanqi305的github，做MobileNetv2-ssd的训练时，发现在python coco2voc.py时，
+总是出现shape mismatch，此时需要from的deploy.prototxt和to的deploy.prototxt中engine: CAFFE都解注释掉
