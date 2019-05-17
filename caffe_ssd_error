@@ -1,0 +1,47 @@
+本人的机器有三块GPU，编译liuwei89的caffe-ssd版本时，出现以下问题：
+
+*** Aborted at 1558095228 (unix time) try "date -d @1558095228" if you are using GNU date ***
+PC: @     0x7fccc6d21331 __memmove_ssse3_back
+*** SIGSEGV (@0x4f1f5000) received by PID 139752 (TID 0x7fcceb420900) from PID 1327452160; stack trace: ***
+    @     0x7fccc6fa26d0 (unknown)
+    @     0x7fccc6d21331 __memmove_ssse3_back
+    @     0x7fccead2d9dc std::vector<>::erase()
+    @     0x7fcceadb7feb caffe::DevicePair::compute()
+    @     0x7fcceadbcc06 caffe::P2PSync<>::Prepare()
+    @     0x7fcceadbd16c caffe::P2PSync<>::Run()
+    @           0x40a104 train()
+    @           0x40763c main
+    @     0x7fccc6be8445 __libc_start_main
+    @           0x407f33 (unknown)
+train.sh: line 5: 139752 Segmentation fault      /home/hs/code/research/caffe_ssd/build/tools/caffe train --solver="solver_train.prototxt" --weights="deploy.caffemodel" --gpu="0,1,2"
+
+主要原因在于src/caffe/parallel.cpp对于三个GPU的情况不能适用，修改方法为：
+
+
+From: Sven Eberhardt <sven2@brown.edu>
+Date: Fri, 22 Jan 2016 11:27:06 -0500
+Subject: [PATCH] Fix crash when pairing 3 GPUs without P2P access (github/BVLC
+ issue #3531)
+
+---
+ src/caffe/parallel.cpp | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/src/caffe/parallel.cpp b/src/caffe/parallel.cpp
+index 62f5d73..4893241 100644
+--- a/src/caffe/parallel.cpp
++++ b/src/caffe/parallel.cpp
+@@ -169,9 +169,8 @@ void DevicePair::compute(const vector<int> devices, vector<DevicePair>* pairs) {
+   DLOG(INFO) << "GPUs paired by P2P access, remaining: " << s.str();
+ 
+   // Group remaining
+-  remaining_depth = ceil(log2(remaining.size()));
+-  for (int d = 0; d < remaining_depth; ++d) {
+-    for (int i = 0; i < remaining.size(); ++i) {
++  while (remaining.size() > 1) {
++    for (int i = 0; i+1 < remaining.size(); ++i) {
+       pairs->push_back(DevicePair(remaining[i], remaining[i + 1]));
+       DLOG(INFO) << "Remaining pair: " << remaining[i] << ":"
+                  << remaining[i + 1];
+-- 
+1.9.1
