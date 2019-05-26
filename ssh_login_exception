@@ -1,0 +1,14 @@
+ssh xx.xxx.xxx.xx
+ssh: connect to host xx.xxx.xxx.xx port 22: Can't assign requested address
+
+Haoshuangs-MacBook-Pro:~ haoshuang$ sudo ifconfig en0 down
+Password:
+Haoshuangs-MacBook-Pro:~ haoshuang$ sudo route flush
+172                  192.168.1.1          done
+route: write to routing socket: No such process
+got only -1 for rlen
+Haoshuangs-MacBook-Pro:~ haoshuang$ sudo ifconfig en0 up
+Haoshuangs-MacBook-Pro:~ haoshuang$ ssh hs@172.16.40.252
+hs@172.16.40.252's password: 
+Last login: Sun May 26 09:45:37 2019 from 61.148.244.84
+-bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
