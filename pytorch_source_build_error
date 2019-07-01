@@ -32,3 +32,20 @@ We had the same issue. Problem was the version of MKL which was not good. Just r
 
 conda remove mkl mkl-include
 conda install numpy pyyaml mkl=2019.3 mkl-include setuptools cmake cffi typing
+
+
+(4)ptxas warning : Too big maxrregcount value specified 96, will be ignored
+CUDA8_GENCODE = -gencode=arch=compute_30,code=sm_30 \
+                -gencode=arch=compute_35,code=sm_35 \
+                -gencode=arch=compute_50,code=sm_50 \
+                -gencode=arch=compute_60,code=sm_60 \
+                -gencode=arch=compute_61,code=sm_61
+                
+->
+
+
+#CUDA8_GENCODE = -gencode=arch=compute_30,code=sm_30 
+CUDA8_GENCODE = -gencode=arch=compute_35,code=sm_35 \
+                -gencode=arch=compute_50,code=sm_50 \
+                -gencode=arch=compute_60,code=sm_60 \
+                -gencode=arch=compute_61,code=sm_61
