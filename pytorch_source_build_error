@@ -17,3 +17,18 @@ I noticed that there is -I. and -I../ in the compile command, so the compiler sh
 #include "caffe2/caffe2/contrib/aten/gen_aten_op.h"
 
 USE_NINJA=OFF python setup.py install (or USE_NINJA=OFF python setup.py build develop)
+
+
+(3)
+/home/anthony/pytorch/build/lib/libcaffe2.so: undefined reference to `cblas_gemm_s8u8s32_pack'
+/home/anthony/pytorch/build/lib/libcaffe2_gpu.so: undefined reference to `__cudaPushCallConfiguration'
+/home/anthony/pytorch/build/lib/libcaffe2_gpu.so: undefined reference to `__cudaPopCallConfiguration'
+/home/anthony/pytorch/build/lib/libcaffe2.so: undefined reference to `cblas_sgemm_pack_get_size'
+/home/anthony/pytorch/build/lib/libcaffe2.so: undefined reference to `cblas_gemm_s8u8s32_compute'
+/home/anthony/pytorch/build/lib/libcaffe2.so: undefined reference to `cblas_gemm_s8u8s32_pack_get_size'
+collect2: error: ld returned 1 exit status
+
+We had the same issue. Problem was the version of MKL which was not good. Just running:
+
+conda remove mkl mkl-include
+conda install numpy pyyaml mkl=2019.3 mkl-include setuptools cmake cffi typing
