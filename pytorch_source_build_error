@@ -62,3 +62,6 @@ compilation terminated.
 
 maybe forgot to execute:
 git submodule update --init --recursive
+
+(6)
+pytorch v1.0.0 对应的mkl为2019.1 mkl-include也为2019.1
