@@ -49,3 +49,16 @@ CUDA8_GENCODE = -gencode=arch=compute_35,code=sm_35 \
                 -gencode=arch=compute_50,code=sm_50 \
                 -gencode=arch=compute_60,code=sm_60 \
                 -gencode=arch=compute_61,code=sm_61
+
+
+(5)
+In file included from /home/hs/code/pytorch/third_party/ideep/mkl-dnn/include/mkldnn.hpp:28:0,
+                 from /home/hs/code/pytorch/aten/src/ATen/mkldnn/Runtime.h:3,
+                 from /home/hs/code/pytorch/aten/src/ATen/native/mkldnn/Conv.cpp:37:
+/home/hs/code/pytorch/third_party/ideep/mkl-dnn/include/mkldnn.h:55:28: fatal error: mkldnn_version.h: No such file or directory
+ #include "mkldnn_version.h"
+                            ^
+compilation terminated.
+
+maybe forgot to execute:
+git submodule update --init --recursive
