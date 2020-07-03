@@ -15,8 +15,6 @@ pip install pip==20.0.2 -i https://pypi.douban.com/simple
 至此，pyangbind-brcd==0.6.14应该安装完毕了
 
 5 将requirements.txt中的pyangbind-brcd==0.6.14注释掉，继续用pip install -r requirements.txt -i https://pypi.douban.com/simple来安装
-发现
-5 将requirements.txt中的pyangbind-brcd==0.6.14注释掉，继续用pip install -r requirements.txt -i https://pypi.douban.com/simple来安装
 还有一些问题，于是注释掉一些无用的库，重新安装，应该成功。
 
 最后requirements.txt长这个样子
