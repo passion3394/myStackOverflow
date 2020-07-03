@@ -1,0 +1,71 @@
+1 首先，将cloud_lesson.yml中的pip安装部分copy出来，形成新的pip依赖文件requirements.txt
+2 然后，用pip install -r requirements.txt -i https://pypi.douban.com/simple来安装
+3 安装到pyangbind-brcd==0.6.14时，会遇到ModuleNotFoundError: No module named 'pip.req'错误，wget下载源码，修改
+try: # for pip >= 10
+    from pip._internal.req import parse_requirements
+except ImportError: # for pip <= 9.0.3
+    from pip.req import parse_requirements
+
+4 继续，如果遇到AttributeError: 'ParsedRequirement' object has no attribute 'req'
+pip install pip==20.0.2 -i https://pypi.douban.com/simple
+
+至此，pyangbind-brcd==0.6.14应该安装完毕了
+
+5 将requirements.txt中的pyangbind-brcd==0.6.14注释掉，继续用pip install -r requirements.txt -i https://pypi.douban.com/simple来安装
+发现
+5 将requirements.txt中的pyangbind-brcd==0.6.14注释掉，继续用pip install -r requirements.txt -i https://pypi.douban.com/simple来安装
+还有一些问题，于是注释掉一些无用的库，重新安装，应该成功。
+
+最后requirements.txt长这个样子
+
+appnope==0.1.0
+attrs==19.3.0
+backcall==0.1.0
+#bitarray==1.2.1
+bleach==3.1.4
+decorator==4.4.2
+defusedxml==0.6.0
+entrypoints==0.3
+importlib-metadata==1.6.0
+ipykernel==5.2.0
+ipython==7.13.0
+ipython-genutils==0.2.0
+ipywidgets==7.5.1
+jedi==0.16.0
+jinja2==2.11.1
+jsonschema==3.2.0
+#jupyter-client==6.1.2
+#jupyter-core==4.6.3
+lxml==4.5.0
+markupsafe==1.1.1
+mistune==0.8.4
+more-itertools==8.2.0
+nbconvert==5.6.1
+nbformat==5.0.4
+#notebook==6.0.3
+open3d-python==0.7.0.0
+packaging==20.3
+pandocfilters==1.4.2
+parso==0.6.2
+pexpect==4.8.0
+pickleshare==0.7.5
+pluggy==0.13.1
+prometheus-client==0.7.1
+prompt-toolkit==3.0.5
+ptyprocess==0.6.0
+py==1.8.1
+pyang==2.2.1
+#pyangbind-brcd==0.6.14
+pybind==0.1.35
+pygments==2.6.1
+pyrsistent==0.16.0
+pytest==5.4.1
+pyzmq==19.0.0
+send2trash==1.5.0
+#terminado==0.8.3
+testpath==0.4.4
+traitlets==4.3.3
+wcwidth==0.1.9
+webencodings==0.5.1
+widgetsnbextension==3.5.1
+zipp==3.1.0
