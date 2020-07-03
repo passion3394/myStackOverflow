@@ -1,6 +1,9 @@
 1 首先，将cloud_lesson.yml中的pip安装部分copy出来，形成新的pip依赖文件requirements.txt
 2 然后，用pip install -r requirements.txt -i https://pypi.douban.com/simple来安装
-3 安装到pyangbind-brcd==0.6.14时，会遇到ModuleNotFoundError: No module named 'pip.req'错误，wget下载源码，修改
+3 安装到pyangbind-brcd==0.6.14时，会遇到ModuleNotFoundError: No module named 'pip.req'错误，wget下载源码，
+将
+from pip.req import parse_requirements
+修改为
 try: # for pip >= 10
     from pip._internal.req import parse_requirements
 except ImportError: # for pip <= 9.0.3
